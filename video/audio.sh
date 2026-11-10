@@ -25,13 +25,13 @@ EVENTS=(
   "impact.wav 4.25 0.7" "v_custom.wav 4.30 1.0"
   "impact.wav 5.55 0.9" "v_revends.wav 5.60 1.0" "coin.wav 5.62 0.9" "coin.wav 5.80 0.7" "coin.wav 6.00 0.6"
   "whoosh.wav 6.60 0.8" "$A/franck-salut.mp3 6.80 1.0"
-  "impact.wav 9.25 1.0" "v_vache.wav 9.28 1.25"
+  "impact.wav 8.95 1.0" "$A/voix/vache.mp3 8.95 1.3"
   "whoosh.wav 10.80 0.8"
   "impact.wav 13.35 1.0" "$A/franck-salut.mp3 13.20 0.95" "coin.wav 13.40 0.6"
   "whoosh.wav 14.80 0.8" "v_parade.wav 15.30 1.0"
   "whoosh.wav 19.80 0.8" "v_feats.wav 20.30 1.0" "impact.wav 20.60 0.7" "coin.wav 20.65 0.7" "impact.wav 21.80 0.6" "coin.wav 21.85 0.8"
   "whoosh.wav 24.80 0.8" "impact.wav 25.35 0.9" "$A/franck-salut.mp3 25.10 1.0"
-  "v_end.wav 27.80 1.0" "coin.wav 28.10 0.5"
+  "v_end.wav 27.60 1.0" "coin.wav 28.10 0.5"
 )
 IN=(-i music.wav)
 F=""

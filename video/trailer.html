@@ -208,11 +208,11 @@ function scene1(t) {
   camera("L1", t, 3, 6.8);
 }
 function scene2(t) {
-  setHTML($("s2-franck"), franckSvg(t > 9.2 && t < 10 ? "wow" : mouth(t)));
+  setHTML($("s2-franck"), franckSvg(t > 8.9 && t < 9.8 ? "wow" : mouth(t)));
   // la vache arrive, puis les autres animaux surgissent
   const cowX = lerp(1300, 540, eOut(seg(t, 6.8, 7.9)));
   const bob = Math.abs(Math.sin(t * 9)) * 18 * (t < 7.9 ? 1 : 0.2);
-  const shake = t > 9.25 && t < 9.7 ? Math.sin(t * 90) * 18 : 0;
+  const shake = t > 8.95 && t < 9.4 ? Math.sin(t * 90) * 18 : 0;
   let h = `<div class="abs" style="left:${cowX - 330 + shake}px;top:${900 - bob}px;width:660px">${Art.cow(1)}</div>`;
   const others = [["ane", 10.0, 190, 1240, "C'EST UN ÂNE !"], ["zebre", 10.3, 540, 1330, "C'EST UN ZÈBRE !"], ["cheval", 10.6, 880, 1240, "C'EST UN CHEVAL !"]];
   for (const [k, a, x, y, txt] of others) {
@@ -222,7 +222,7 @@ function scene2(t) {
     h += `<div class="abs tag" style="left:${x}px;top:${y + 250}px;transform:translate(-50%,0) scale(${p});font-size:34px">${txt}</div>`;
   }
   setHTML($("s2-animals"), h);
-  if (t >= 9.25) slam($("s2-word"), "C'EST UNE<br>VACHE !", t, 9.25); else { $("s2-word").style.opacity = 0; }
+  if (t >= 8.95) slam($("s2-word"), "C'EST UNE<br>VACHE !", t, 8.95); else { $("s2-word").style.opacity = 0; }
   $("L2").style.transform = shake ? `translate(${shake * 0.6}px, ${-shake * 0.3}px)` : `scale(${1 + 0.05 * seg(t, 6.8, 11)})`;
 }
 function scene3(t) {
@@ -363,7 +363,7 @@ function seek(t) {
   // flash blanc à chaque coupe
   let fl = 0;
   for (const c of CUTS) { const d = t - c; if (d >= 0 && d < 0.18) fl = Math.max(fl, 1 - d / 0.18); }
-  if (t > 9.25 && t < 9.4) fl = Math.max(fl, 0.6);
+  if (t > 8.95 && t < 9.1) fl = Math.max(fl, 0.6);
   if (t > 13.35 && t < 13.5) fl = Math.max(fl, 0.7);
   $("flash").style.opacity = fl * 0.85;
   return true;

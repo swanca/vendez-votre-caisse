@@ -16,7 +16,7 @@ Puis ouvre http://localhost:8080/vendez-votre-caisse/
 
 ## Bande-annonce (dossier `video/`)
 - `trailer.html` : les scènes animées (1080×1920), calculées image par image (`seek(t)`) ; `?play` pour l'aperçu en direct.
-- `voices.ps1` : voix off (voix Windows Hortense).
+- `voices.sh` : voix off naturelle (voix neuronale « Rémy » via edge-tts : `py -m pip install edge-tts`).
 - `audio.sh` : musique synthétisée, effets, voix et gimmicks de Franck mixés.
 - `render.js` : rendu des 900 images avec Chrome headless ; puis ffmpeg assemble `bande-annonce.mp4`.
 
@@ -44,7 +44,7 @@ Puis ouvre http://localhost:8080/vendez-votre-caisse/
 ## Son
 - `assets/franck-complet.mp3` : joué au tout premier lancement.
 - `assets/franck-salut.mp3` : les 2,65 premières secondes, jouées à chaque achat (gimmick).
-- Animaux : gimmick puis voix de synthèse du navigateur, forte et énervée, enchaînée juste après.
+- `assets/voix/*.mp3` : « C'est une vache ! », etc. (voix neuronale naturelle), qui coupent Franck sur la fin de « Leboeuf » (départ 2,15 s après le début du gimmick, en Web Audio).
 
 ## Fichiers
 | Fichier | Rôle |
