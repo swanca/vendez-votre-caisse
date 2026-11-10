@@ -35,6 +35,7 @@ const MISSIONS = [
   { n: "Nouvelle saison", d: "Lance une nouvelle saison de pubs (onglet Notoriété).", c: (S) => S.stats.seasons >= 1, r: "valise" },
   { n: "Franck à Lyon", d: "Ouvre ta première franchise.", c: (S) => Object.values(S.franchise || {}).some((v) => v > 0), r: "valise" },
   { n: "Pied au plancher", d: "Débloque la gamme Sportives.", c: (S) => S.tierMax >= 4, r: "valise" },
+  { n: "Tireur d'élite", d: "Marque 4 tirs au but sur 5 face au gardien.", c: (S) => (S.stats.bestPenalty || 0) >= 4, r: "valise" },
   { n: "Jongleur pro", d: "Fais 25 jongles.", c: (S) => (S.stats.bestJuggle || 0) >= 25, r: "valise" },
   { n: "Grand luxe", d: "Débloque la gamme Luxe.", c: (S) => S.tierMax >= 5, r: "valise" }
 ];
@@ -91,6 +92,7 @@ const COMBOS = [
    Ils traversent l'écran ; un clic déclenche leur effet. */
 const VISITORS = [
   { id: "foot", n: "Un footballeur star", icon: "⚽", line: "Hé Franck ! On se fait un petit défi de jongles ?", w: 3 },
+  { id: "keeper", n: "Un gardien de but", icon: "🧤", line: "Cinq tirs au but, Franck. Si tu marques, je t'achète une voiture.", w: 2 },
   { id: "influ", n: "Une influenceuse", icon: "🤳", line: "Coucou la commu ! Je suis chez Franck !", w: 2 },
   { id: "mamie", n: "Mamie Ginette", icon: "👵", line: "Tiens mon petit, des bonbons… et un coffre.", w: 2 },
   { id: "alien", n: "Un extraterrestre poli", icon: "👽", line: "Bonjour. Je voudrais acheter votre voiture la plus brillante.", w: 1 },

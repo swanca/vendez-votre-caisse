@@ -22,10 +22,10 @@ const Game = (() => {
       tierMax: 0, focus: -1, garage: 0,
       ads: {}, staff: {}, ups: {}, gen: 0, catalog: {}, pack: {},
       lot: [], commission: null, comT: 60, offer: null, animals: {},
-      codex: {}, franchise: {}, market: null, skills: {}, auction: null, auctionT: 300, museum: [], chal: [],
+      codex: {}, franchise: {}, mission: 0, chests: {}, acc: {}, market: null, skills: {}, auction: null, auctionT: 300, museum: [], chal: [],
       stars: 0, starsSpent: 0, talents: {},
       boosts: {}, eventT: 90,
-      stats: { sold: 0, bought: 0, commissions: 0, seasons: 0, starsTotal: 0, play: 0, bestSale: 0, customs: 0, negos: 0, skills: 0, animals: 0, auctions: 0, chals: 0 },
+      stats: { sold: 0, bought: 0, commissions: 0, seasons: 0, starsTotal: 0, play: 0, bestSale: 0, customs: 0, negos: 0, skills: 0, animals: 0, auctions: 0, chals: 0, combos: 0, accs: 0, juggles: 0, bestJuggle: 0, chestsOpened: 0, visitors: 0 },
       ach: {}, settings: { sound: true, volume: 0.8, intro: false }
     };
   }
@@ -104,8 +104,123 @@ const Game = (() => {
   function salePrice(c) {
     const ct = customTotals(c.custom);
     const unique = c.unique ? 1.15 : 1;
-    return basePrice(c) * (1.15 + ct.val) * garageInfo(S.garage).mult * upMult("price") * globalMult() * unique * c.q * trend(carStyle(c)) * boost("price") * (c.ed ? 4 : 1);
+    return basePrice(c) * (1.15 + ct.val) * garageInfo(S.garage).mult * upMult("price") * globalMult() * unique * c.q * trend(carStyle(c)) * boost("price") * (c.ed ? 4 : 1) * comboMult(c) * accMult(c);
   }
+  /* ---------------- STYLES SIGNATURE & ACCESSOIRES ---------------- */
+  function combosOf(c) {
+    const cu = c.custom || {};
+    return COMBOS.filter((k) => {
+      if (k.color && c.color !== k.color) return false;
+      for (const x in k.req || {}) if ((cu[x] || 0) < k.req[x]) return false;
+      for (const x in k.exact || {}) if ((cu[x] || 0) !== k.exact[x]) return false;
+      return true;
+    });
+  }
+  const comboMult = (c) => 1 + combosOf(c).reduce((a, k) => a + k.v, 0);
+  const accMult = (c) => { if (!c.acc) return 1; const a = ACCESSORIES.find((x) => x.id === c.acc); return a ? 1 + a.v : 1; };
+  // cote de 1 à 5 étoiles selon la personnalisation
+  function rating(c) {
+    const ct = customTotals(c.custom || {});
+    const score = ct.val + combosOf(c).reduce((a, k) => a + k.v, 0) + (accMult(c) - 1) + (c.unique ? 0.15 : 0);
+    return Math.max(1, Math.min(5, 1 + Math.floor(score / 0.6)));
+  }
+  function applyAcc(carId, accId) {
+    const c = S.lot.find((x) => x.id === carId);
+    if (!c || c.acc || !(S.acc[accId] > 0)) return false;
+    S.acc[accId]--; c.acc = accId; S.stats.accs++;
+    emit("acc", { a: ACCESSORIES.find((x) => x.id === accId) }); bump();
+    return true;
+  }
+
+  /* ---------------- CARRIÈRE & COFFRES ---------------- */
+  const currentMission = () => missionInfo(S.mission);
+  const missionDone = () => { try { return !!currentMission().c(S, api); } catch (e) { return false; } };
+  function claimMission() {
+    if (!missionDone()) return false;
+    const m = currentMission();
+    const cash = Math.max(150, incomeEstimate() * 90 * (1 + S.mission * 0.05));
+    addMoney(cash);
+    addChest(m.r);
+    S.mission++;
+    emit("mission", { m, cash }); bump();
+    return true;
+  }
+  function addChest(k, n = 1) { S.chests[k] = (S.chests[k] || 0) + n; bump(); }
+  function rollAcc(maxR) {
+    const pool = ACCESSORIES.filter((a) => a.r <= maxR);
+    const w = pool.map((a) => [6, 2.5, 1][a.r]);
+    let x = Math.random() * w.reduce((p, q) => p + q, 0);
+    for (let i = 0; i < pool.length; i++) { if ((x -= w[i]) <= 0) return pool[i]; }
+    return pool[0];
+  }
+  function openChest(k) {
+    if (!(S.chests[k] > 0)) return null;
+    S.chests[k]--; S.stats.chestsOpened++;
+    const inc = Math.max(50, incomeEstimate());
+    const out = [];
+    const mins = { boite: 1.5, coffre: 5, valise: 15 }[k];
+    const cash = Math.max({ boite: 150, coffre: 1500, valise: 15000 }[k], inc * 60 * mins * (0.8 + Math.random() * 0.4));
+    addMoney(cash); out.push({ t: "cash", v: cash });
+    const nAcc = { boite: Math.random() < 0.5 ? 1 : 0, coffre: 1, valise: 2 }[k];
+    for (let i = 0; i < nAcc; i++) { const a = rollAcc({ boite: 0, coffre: 1, valise: 2 }[k]); S.acc[a.id] = (S.acc[a.id] || 0) + 1; out.push({ t: "acc", a }); }
+    const bk = pick(["leads", "work", "sell", "price"]);
+    const bv = { boite: 2, coffre: 4, valise: 6 }[k];
+    S.boosts[bk] = { v: bv, until: Date.now() + ({ boite: 45, coffre: 75, valise: 120 }[k]) * 1000 };
+    out.push({ t: "boost", k: bk, v: bv });
+    if (k !== "boite" && Math.random() < 0.5) { S.skills = {}; out.push({ t: "skills" }); }
+    if (k === "valise") {
+      const an = pick(ANIMALS.filter((x) => !x.req));
+      S.animals[an.id] = (S.animals[an.id] || 0) + 1; out.push({ t: "animal", an });
+      if (S.stats.seasons >= 1) { S.stars += 1; S.stats.starsTotal += 1; out.push({ t: "star" }); }
+    }
+    bump();
+    return out;
+  }
+
+  /* ---------------- VISITEURS ---------------- */
+  function visitor(id) {
+    S.stats.visitors++;
+    const vit = S.lot.filter((c) => c.stage === "vitrine");
+    const sellTop = (mult) => {
+      if (!vit.length) { const g = Math.max(200, incomeEstimate() * 60); addMoney(g); return { gain: g }; }
+      const c = vit.sort((a, b) => salePrice(b) - salePrice(a))[0];
+      const g = salePrice(c) * mult;
+      addMoney(g); S.stats.sold += c.q; registerCodex(c); S.lot.splice(S.lot.indexOf(c), 1);
+      return { gain: g, name: carName(c) };
+    };
+    let r = {};
+    if (id === "influ") { S.boosts.leads = { v: 10, until: Date.now() + 30000 }; r = { boost: true }; }
+    else if (id === "mamie") { addChest("boite"); r = { chest: "boite" }; }
+    else if (id === "alien") { const c = S.lot.find((x) => ["hover", "ufo"].includes(carStyle(x)) && x.stage === "vitrine"); r = c ? (() => { const g = salePrice(c) * 10; addMoney(g); S.stats.sold += c.q; registerCodex(c); S.lot.splice(S.lot.indexOf(c), 1); return { gain: g, name: carName(c) }; })() : sellTop(3); }
+    else if (id === "ct") { let n = 0; for (const c of S.lot) if (c.stage === "atelier") { c.done = c.need; n++; } r = { fixed: n }; }
+    else if (id === "cheikh") r = sellTop(2);
+    bump();
+    return r;
+  }
+  // Défi de jongles du footballeur
+  function juggleReward(n) {
+    S.stats.juggles++;
+    S.stats.bestJuggle = Math.max(S.stats.bestJuggle, n);
+    const g = Math.max(100, incomeEstimate() * 8 * n);
+    addMoney(g);
+    let chest = null;
+    if (n >= 25) chest = "valise"; else if (n >= 10) chest = "coffre"; else if (n >= 5) chest = "boite";
+    if (chest) addChest(chest);
+    S.leads = Math.min(leadsMax(), S.leads + n * clickPower());
+    bump();
+    return { gain: g, chest };
+  }
+
+  function penaltyReward(goals) {
+    S.stats.bestPenalty = Math.max(S.stats.bestPenalty || 0, goals);
+    const g = Math.max(150, incomeEstimate() * 25 * goals);
+    addMoney(g);
+    const chest = goals >= 5 ? "valise" : goals >= 3 ? "coffre" : goals >= 1 ? "boite" : null;
+    if (chest) addChest(chest);
+    bump();
+    return { gain: g, chest };
+  }
+
   function buyPrice(t, b, m, cond, q) { return tierInfo(t).p * (1 + 0.12 * b) * [0.85, 1, 1.2][m] * cond * 0.6 * negoMult() * q; }
   // on ne propose pas une gamme dont même une épave coûterait plus que la caisse
   function affordable(t) { while (t > 0 && buyPrice(t, 0, 0, 0.45, convoy()) > S.money) t--; return t; }
@@ -480,8 +595,10 @@ const Game = (() => {
         S.stats.sold += c.q;
         S.stats.bestSale = Math.max(S.stats.bestSale, gain);
         registerCodex(c);
+        if (combosOf(c).length) S.stats.combos++;
+        if (c.acc === "klaxon") emit("klaxon", {});
         S.lot.splice(i, 1); i--;
-        emit("sale", { gain, name: carName(c), unique: c.unique });
+        emit("sale", { gain, name: carName(c), unique: c.unique, id: c.id, t: c.t });
       }
     }
     // commandes et évènements
@@ -504,7 +621,7 @@ const Game = (() => {
   function prestige() {
     const p = pendingStars();
     if (p < 1) return;
-    const keep = { stars: S.stars + p, starsSpent: S.starsSpent, talents: S.talents, ach: S.ach, stats: S.stats, earnedTotal: S.earnedTotal, settings: S.settings, created: S.created, clicks: S.clicks, codex: S.codex, museum: S.museum, franchise: S.franchise };
+    const keep = { stars: S.stars + p, starsSpent: S.starsSpent, talents: S.talents, ach: S.ach, stats: S.stats, earnedTotal: S.earnedTotal, settings: S.settings, created: S.created, clicks: S.clicks, codex: S.codex, museum: S.museum, franchise: S.franchise, mission: S.mission, chests: S.chests, acc: S.acc };
     const tierMax = tal("t_keep") ? S.tierMax : 0;
     const garage = Math.min(S.garage, tal("t_garage"));
     S = Object.assign(newState(), keep);
@@ -570,7 +687,7 @@ const Game = (() => {
   const money = (n) => fmt(n) + " €";
   function fmtTime(s) { s = Math.max(0, Math.floor(s)); const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60; return h ? `${h} h ${String(m).padStart(2, "0")}` : m ? `${m} min ${String(x).padStart(2, "0")}` : `${x} s`; }
 
-  return {
+  const api = {
     get S() { return S; }, get ver() { return ver; }, events, bump, emit,
     tick, load, save, reset, exportSave, importSave, checkAch,
     currentOffer, offerPrice, manualBuy, skipOffer, animalCount, animalTotal, animalCost, animalUnlocked, buyAnimal, animalIncome, animalLeadPct,
@@ -579,7 +696,9 @@ const Game = (() => {
     customize, customizeCost, matchesCommission, deliverCommission, triggerEvent, prestige, pendingStars, freeStars, buyTalent, tal,
     leadsPerSec, leadsMax, lotCap, convoy, negoMult, clickPower, workPower, sellPower, globalMult, starMult, achMult, milestoneMult, upMult, incomeEstimate,
     salePrice, basePrice, buyPrice, carName, carStyle, carSpec, workUnit, sellUnit, packFor, partsCost, customTotals, catalogTotal,
-    fmt, money, fmtTime
+    fmt, money, fmtTime,
+    combosOf, comboMult, accMult, rating, applyAcc, currentMission, missionDone, claimMission, addChest, openChest, visitor, juggleReward, penaltyReward
   };
+  return api;
 })();
 if (typeof module !== "undefined") module.exports = Game;
