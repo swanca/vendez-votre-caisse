@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#13207a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VotreCaisse">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <title>Vendez Votre Caisse !</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="splash"></div>
+  <div id="app" class="hidden">
+    <header class="top">
+      <div class="logo sm">Vendez<b>Votre</b>Caisse<span>.fr</span></div>
+      <div class="pill money"><small>Caisse</small><b id="t-money">0 €</b><i id="t-income"></i></div>
+      <div class="pill"><small>📞 Clients</small><b id="t-leads">0</b><i id="t-lps"></i></div>
+      <div class="pill"><small>🅿️ Parc</small><b id="t-lot">0/3</b></div>
+      <div class="pill star"><small>⭐ Étoiles</small><b id="t-stars">0</b></div>
+      <button class="fs-btn" data-act="fullscreen" title="Plein écran">⛶</button>
+    </header>
+    <aside class="franck-col">
+      <div class="franck-wrap"><div id="franck"></div><div id="bubble" class="bubble"></div></div>
+      <button class="ad-btn" data-act="ad">📣 Tourner une pub !<small id="ad-gain">+1 client</small></button>
+      <div id="skills" class="skills"></div>
+      <nav id="nav"></nav>
+    </aside>
+    <main id="main"></main>
+  </div>
+  <div id="modal-wrap" class="hidden"><div id="modal"></div></div>
+  <div id="toasts"></div>
+  <script src="js/data.js"></script>
+  <script src="js/art.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Vendez Votre Caisse !",
+  "short_name": "VotreCaisse",
+  "description": "L'idle game où Franck rachète toutes les voitures (parodie).",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#0b1550",
+  "theme_color": "#13207a",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
