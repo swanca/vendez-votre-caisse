@@ -1,2 +1,4 @@
 node_modules/
 *.log
+video/out/
+video/bande-annonce.mp4

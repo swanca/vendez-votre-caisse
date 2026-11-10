@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Trailer — Vendez Votre Caisse</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; font-family: "Nunito", sans-serif; color: #fff; background: #0a1250; }
+  .layer { position: absolute; inset: 0; display: none; }
+  .abs { position: absolute; }
+  .anton { font-family: "Anton", Impact, sans-serif; letter-spacing: .01em; }
+  svg { display: block; }
+  .bg-blue { background: radial-gradient(circle at 40% 30%, #3a56d4, #0a1250 75%); }
+  .logo { font-family: "Anton", sans-serif; color: #fff; text-shadow: 6px 6px 0 #0a0f3a; line-height: 1; white-space: nowrap; }
+  .logo b { color: #ffcc00; font-weight: 400; } .logo span { color: #9fb2ff; font-size: .55em; }
+  .btnY { background: linear-gradient(180deg, #ffe14d, #ffcc00); color: #241a00; border: 4px solid #d9a400; border-radius: 26px; box-shadow: 0 10px 0 #b88a00; font-family: "Anton", sans-serif; text-align: center; }
+  .slam { font-family: "Anton", sans-serif; color: #ffe14d; -webkit-text-stroke: 5px #241a00; text-shadow: 10px 10px 0 #a33f00, 0 0 60px rgba(255, 200, 0, .7); text-align: center; white-space: nowrap; line-height: 1; }
+  .slam.red { color: #ff3b52; text-shadow: 10px 10px 0 #5a0010, 0 0 60px rgba(255, 50, 50, .7); }
+  .slam.white { color: #fff; text-shadow: 10px 10px 0 #13207a, 0 0 50px rgba(120, 160, 255, .8); }
+  .card { background: #fff; color: #121a3a; border-radius: 40px; box-shadow: 0 30px 80px rgba(0, 0, 0, .45); }
+  .p { position: absolute; font-size: 70px; transform: translate(-50%, -50%); }
+  .tag { background: #fff; color: #121a3a; border-radius: 22px; padding: 10px 26px; font-weight: 900; font-size: 44px; box-shadow: 0 10px 30px rgba(0, 0, 0, .35); white-space: nowrap; }
+  .flash { position: absolute; inset: 0; background: #fff; pointer-events: none; opacity: 0; z-index: 50; }
+  .bars { position: absolute; left: 0; right: 0; height: 0; background: #000; z-index: 40; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- 0 : écran titre (identique au jeu) -->
+  <div class="layer bg-blue" id="L0">
+    <div class="abs" id="s0-franck" style="left:190px;top:260px;width:700px;border-radius:48px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5)"></div>
+    <div class="abs logo" id="s0-logo" style="left:0;right:0;top:1120px;text-align:center;font-size:118px">Vendez<b>Votre</b>Caisse<span>.fr</span></div>
+    <div class="abs" style="left:80px;right:80px;top:1290px;text-align:center;font-size:46px;font-weight:900">L'idle game où Franck rachète TOUTES les voitures.</div>
+    <div class="abs btnY" id="s0-btn" style="left:200px;width:680px;top:1450px;font-size:76px;padding:34px 0">▶ Lancer le jeu</div>
+    <div class="abs" style="left:0;right:0;top:1680px;text-align:center;font-size:30px;opacity:.7">Parodie de fan, non officielle. Marques inventées. Son conseillé 🔊</div>
+    <div class="abs" id="s0-finger" style="font-size:150px;left:620px;top:1560px">👆</div>
+  </div>
+  <!-- 1 : rachète / customise / revends -->
+  <div class="layer bg-blue" id="L1">
+    <div class="abs slam" id="s1-word" style="left:0;right:0;top:200px;font-size:190px"></div>
+    <div class="abs card" id="s1-card" style="left:70px;right:70px;top:560px;height:900px;padding:40px">
+      <div id="s1-car" style="background:linear-gradient(180deg,#dfe6ff,#b7c4f5);border-radius:30px;padding:30px;height:470px;display:flex;align-items:center"></div>
+      <div id="s1-name" class="anton" style="font-size:78px;margin-top:30px;color:#13207a"></div>
+      <div id="s1-price" style="font-size:56px;font-weight:900;margin-top:10px"></div>
+    </div>
+    <div class="abs" id="s1-fx" style="inset:0"></div>
+  </div>
+  <!-- 2 : le pré -->
+  <div class="layer" id="L2" style="background:linear-gradient(180deg,#7cc4ff 0 55%,#4cb85c 55%)">
+    <div class="abs" style="left:-100px;right:-100px;top:1000px;height:120px;background:#3e9f4d;border-radius:50%"></div>
+    <div class="abs" id="s2-animals" style="inset:0"></div>
+    <div class="abs slam red" id="s2-word" style="left:0;right:0;top:330px;font-size:150px"></div>
+    <div class="abs" id="s2-franck" style="left:40px;top:40px;width:300px;border-radius:30px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.4)"></div>
+  </div>
+  <!-- 3 : football -->
+  <div class="layer" id="L3" style="background:linear-gradient(180deg,#0d1b4a 0 30%,#1d6b2c 30%)">
+    <div class="abs" id="s3-lights" style="inset:0"></div>
+    <div class="abs" id="s3-goal" style="left:120px;right:120px;top:640px;height:520px;border:16px solid #fff;border-bottom:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.25) 0 3px,transparent 3px 40px),repeating-linear-gradient(0deg,rgba(255,255,255,.25) 0 3px,transparent 3px 40px)"></div>
+    <div class="abs" id="s3-keeper" style="font-size:230px;left:540px;top:900px;transform:translate(-50%,-50%)">🧍</div>
+    <div class="abs" id="s3-ball" style="font-size:150px;left:540px;top:1500px;transform:translate(-50%,-50%)">⚽</div>
+    <div class="abs slam white" id="s3-count" style="left:0;right:0;top:180px;font-size:200px"></div>
+    <div class="abs slam" id="s3-word" style="left:0;right:0;top:300px;font-size:230px"></div>
+    <div class="abs" id="s3-franck" style="right:30px;bottom:60px;width:380px"></div>
+    <div class="abs" id="s3-fx" style="inset:0"></div>
+  </div>
+  <!-- 4 : progression -->
+  <div class="layer" id="L4">
+    <div class="abs" id="s4-sky" style="inset:0"></div>
+    <div class="abs slam white" id="s4-tier" style="left:0;right:0;top:260px;font-size:130px"></div>
+    <div class="abs slam" id="s4-price" style="left:0;right:0;top:430px;font-size:150px"></div>
+    <div class="abs" id="s4-cars" style="inset:0"></div>
+    <div class="abs" style="left:0;right:0;top:1500px;height:8px;background:rgba(255,255,255,.4)"></div>
+  </div>
+  <!-- 5 : fonctionnalités -->
+  <div class="layer bg-blue" id="L5">
+    <div class="abs slam" id="s5-word" style="left:0;right:0;top:250px;font-size:170px"></div>
+    <div class="abs" id="s5-art" style="left:0;right:0;top:560px;height:900px"></div>
+    <div class="abs" id="s5-sub" style="left:0;right:0;top:1500px;text-align:center"></div>
+    <div class="abs" id="s5-fx" style="inset:0"></div>
+  </div>
+  <!-- 6 : carton final -->
+  <div class="layer bg-blue" id="L6">
+    <div class="abs" id="s6-rays" style="inset:0"></div>
+    <div class="abs" id="s6-franck" style="left:160px;top:200px;width:760px;border-radius:50px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5)"></div>
+    <div class="abs logo" id="s6-logo" style="left:0;right:0;top:1100px;text-align:center;font-size:120px">Vendez<b>Votre</b>Caisse<span>.fr</span></div>
+    <div class="abs btnY" id="s6-cta" style="left:130px;right:130px;top:1290px;font-size:72px;padding:26px 0">JOUE GRATUITEMENT</div>
+    <div class="abs" id="s6-sub" style="left:0;right:0;top:1500px;text-align:center;font-size:44px;font-weight:900">📱 Sur mobile · ⛶ Plein écran · 📲 Installable</div>
+    <div class="abs" id="s6-url" style="left:0;right:0;top:1600px;text-align:center;font-size:40px;color:#ffe14d;font-weight:900">swanca.github.io/vendez-votre-caisse</div>
+    <div class="abs" style="left:0;right:0;top:1780px;text-align:center;font-size:28px;opacity:.65">Parodie de fan · non officielle · marques inventées</div>
+  </div>
+  <div class="flash" id="flash"></div>
+</div>
+<script src="../js/data.js"></script>
+<script src="../js/data2.js"></script>
+<script src="../js/art.js"></script>
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const eOut = (x) => 1 - Math.pow(1 - x, 3);
+const eIn = (x) => x * x * x;
+const eBack = (x) => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const lerp = (a, b, x) => a + (b - a) * x;
+function rng(seed) { let s = seed * 9301 + 49297; return () => ((s = (s * 9301 + 49297) % 233280) / 233280); }
+// Franck parle pendant les clips audio (même timing que la bande-son)
+const CLIPS = [[0.3, 2.9], [6.8, 9.4], [13.2, 15.8], [25.1, 27.7]];
+const talkingAt = (t) => CLIPS.some(([a, b]) => t >= a && t <= b);
+const franckCache = {};
+function franckSvg(mood, bg = true) { const k = mood + bg; return franckCache[k] || (franckCache[k] = Art.franck(mood, { bg })); }
+function setHTML(el, html) { if (el._h !== html) { el._h = html; el.innerHTML = html; } }
+function mouth(t, base = "grin") { return talkingAt(t) ? (Math.floor(t * 7.5) % 2 ? "talk" : base) : base; }
+// texte qui claque : grossit puis se pose
+function slam(el, text, t, a, out) {
+  setHTML(el, text);
+  const p = seg(t, a, a + 0.28);
+  const o = out ? 1 - seg(t, out - 0.15, out) : 1;
+  el.style.opacity = t < a ? 0 : o;
+  el.style.transform = `scale(${lerp(2.6, 1, eBack(p))}) rotate(${lerp(-10, -3, p)}deg)`;
+}
+// gerbe de particules déterministe
+function burstHTML(t, t0, x, y, chars, n, spread, seed, dur = 1.1) {
+  const p = (t - t0) / dur;
+  if (p < 0 || p > 1) return "";
+  const r = rng(seed);
+  let h = "";
+  for (let i = 0; i < n; i++) {
+    const a = r() * Math.PI * 2, d = spread * (0.4 + r() * 0.6), rot = r() * 720 - 360;
+    const q = eOut(p);
+    const px = x + Math.cos(a) * d * q, py = y + Math.sin(a) * d * q - 160 * q + 420 * p * p;
+    h += `<div class="p" style="left:${px}px;top:${py}px;opacity:${1 - p * p};transform:translate(-50%,-50%) rotate(${rot * p}deg) scale(${lerp(0.5, 1.3, Math.min(1, p * 3))})">${chars[i % chars.length]}</div>`;
+  }
+  return h;
+}
+function rainHTML(t, t0, n, seed, chars = ["💶", "🪙", "💰", "⭐"]) {
+  if (t < t0) return "";
+  const r = rng(seed);
+  let h = "";
+  for (let i = 0; i < n; i++) {
+    const x = r() * 1080, sp = 900 + r() * 900, dl = r() * 0.8, rot = r() * 600;
+    const y = -100 + (t - t0 - dl) * sp;
+    if (y < -100 || y > 2000) continue;
+    h += `<div class="p" style="left:${x}px;top:${y}px;transform:translate(-50%,-50%) rotate(${(t - t0) * rot}deg)">${chars[i % chars.length]}</div>`;
+  }
+  return h;
+}
+function show(id, on) { $(id).style.display = on ? "block" : "none"; }
+function camera(id, t, a, b) {
+  // léger zoom continu (effet caméra) + entrée/sortie
+  const el = $(id), p = seg(t, a, b);
+  el.style.transform = `scale(${1 + 0.06 * p})`;
+}
+
+/* ============ SCÈNES ============ */
+const CAR_SEQ = [
+  { style: "citadine", color: "#7f8c8d", rust: true },
+  { style: "citadine", color: "#c0392b" },
+  { style: "citadine", color: "#c0392b", wheel: 1 },
+  { style: "citadine", color: "#2980b9", wheel: 2, spoiler: 1 },
+  { style: "citadine", color: "#2980b9", wheel: 3, spoiler: 2, sticker: 1, color2: "#fff" },
+  { style: "citadine", color: "#8e44ad", wheel: 4, spoiler: 2, sticker: 2, neon: "#ff4fd8" },
+  { style: "citadine", color: "#111111", wheel: 5, rim: "#ffd700", spoiler: 2, sticker: 2, neon: "#00e5ff", kit: true, tint: true, flame: true },
+  { style: "citadine", color: "#f1c40f", wheel: 5, rim: "#ffd700", spoiler: 3, sticker: 4, color2: "#111", neon: "#ffe14d", kit: true, tint: true, flame: true, shine: true }
+];
+const carCache = {};
+const carSvg = (spec) => { const k = JSON.stringify(spec); return carCache[k] || (carCache[k] = Art.car(spec)); };
+
+function scene0(t) {
+  setHTML($("s0-franck"), franckSvg(mouth(t)));
+  const press = seg(t, 2.35, 2.5) - seg(t, 2.5, 2.7);
+  $("s0-btn").style.transform = `scale(${1 - 0.08 * press}) translateY(${press * 10}px)`;
+  const f = $("s0-finger");
+  const fp = eOut(seg(t, 1.6, 2.35));
+  f.style.opacity = t < 1.6 ? 0 : 1;
+  f.style.transform = `translate(${lerp(240, 0, fp)}px, ${lerp(280, 0, fp) + press * 20}px)`;
+  // respiration légère du logo
+  $("s0-logo").style.transform = `scale(${1 + 0.015 * Math.sin(t * 4)})`;
+  const z = eIn(seg(t, 2.7, 3.0));
+  $("L0").style.transform = `scale(${1 + z * 0.5})`;
+  $("L0").style.filter = `blur(${z * 12}px)`;
+}
+function scene1(t) {
+  const words = [[3.0, "RACHÈTE"], [4.25, "CUSTOMISE"], [5.55, "REVENDS"]];
+  let w = words[0];
+  for (const x of words) if (t >= x[0]) w = x;
+  slam($("s1-word"), w[1], t, w[0], w === words[2] ? 6.8 : null);
+  const card = $("s1-card");
+  const inP = eBack(seg(t, 3.0, 3.35));
+  card.style.transform = `translateY(${lerp(900, 0, inP)}px) rotate(${lerp(8, 0, inP)}deg)`;
+  let spec = CAR_SEQ[0];
+  if (t >= 4.25) spec = CAR_SEQ[Math.min(CAR_SEQ.length - 1, 1 + Math.floor((t - 4.25) / 0.17))];
+  setHTML($("s1-car"), `<div style="width:100%">${carSvg(spec)}</div>`);
+  $("s1-car").style.transform = t >= 4.25 && t < 5.55 ? `scale(${1 + 0.04 * Math.sin(t * 30)})` : "none";
+  setHTML($("s1-name"), t < 4.25 ? "Rouillon Tas" : t < 5.55 ? "Rouillon Tas <span style='color:#d9a400'>✨ Pièce unique</span>" : "Rouillon Tas · ★★★★★");
+  const sold = seg(t, 5.55, 6.4);
+  const val = t < 4.25 ? "Rachat : <b style='color:#e0344b'>149 €</b>" : t < 5.55 ? `Cote : <b style='color:#18a957'>${Math.round(lerp(620, 4900, seg(t, 4.25, 5.5)))} €</b>` : `Vendu : <b style='color:#18a957'>${Math.round(lerp(4900, 12500, eOut(sold)))} €</b>`;
+  setHTML($("s1-price"), val);
+  let fx = "";
+  fx += burstHTML(t, 3.3, 540, 760, ["🤝", "✨", "📞"], 10, 360, 1);
+  for (let i = 0; i < 7; i++) fx += burstHTML(t, 4.3 + i * 0.17, 540, 820, ["✨", "🎨", "🔧"], 5, 300, 10 + i, 0.6);
+  fx += burstHTML(t, 5.6, 540, 820, ["💶", "🪙", "💰", "✨"], 26, 620, 3, 1.2);
+  if (t >= 5.55) {
+    const sp = eBack(seg(t, 5.6, 5.85));
+    fx += `<div class="abs anton" style="left:540px;top:820px;font-size:170px;white-space:nowrap;color:#e0344b;border:14px solid #e0344b;border-radius:30px;padding:0 40px;background:rgba(255,255,255,.9);transform:translate(-50%,-50%) rotate(-14deg) scale(${lerp(3, 1, sp)});opacity:${sp > 0 ? 1 : 0}">VENDU !</div>`;
+  }
+  setHTML($("s1-fx"), fx);
+  camera("L1", t, 3, 6.8);
+}
+function scene2(t) {
+  setHTML($("s2-franck"), franckSvg(t > 9.2 && t < 10 ? "wow" : mouth(t)));
+  // la vache arrive, puis les autres animaux surgissent
+  const cowX = lerp(1300, 540, eOut(seg(t, 6.8, 7.9)));
+  const bob = Math.abs(Math.sin(t * 9)) * 18 * (t < 7.9 ? 1 : 0.2);
+  const shake = t > 9.25 && t < 9.7 ? Math.sin(t * 90) * 18 : 0;
+  let h = `<div class="abs" style="left:${cowX - 330 + shake}px;top:${900 - bob}px;width:660px">${Art.cow(1)}</div>`;
+  const others = [["ane", 10.0, 190, 1240, "C'EST UN ÂNE !"], ["zebre", 10.3, 540, 1330, "C'EST UN ZÈBRE !"], ["cheval", 10.6, 880, 1240, "C'EST UN CHEVAL !"]];
+  for (const [k, a, x, y, txt] of others) {
+    if (t < a) continue;
+    const p = eBack(seg(t, a, a + 0.3));
+    h += `<div class="abs" style="left:${x - 190}px;top:${y}px;width:380px;transform:scale(${p});transform-origin:50% 100%">${Art.animal(k, 2)}</div>`;
+    h += `<div class="abs tag" style="left:${x}px;top:${y + 250}px;transform:translate(-50%,0) scale(${p});font-size:34px">${txt}</div>`;
+  }
+  setHTML($("s2-animals"), h);
+  if (t >= 9.25) slam($("s2-word"), "C'EST UNE<br>VACHE !", t, 9.25); else { $("s2-word").style.opacity = 0; }
+  $("L2").style.transform = shake ? `translate(${shake * 0.6}px, ${-shake * 0.3}px)` : `scale(${1 + 0.05 * seg(t, 6.8, 11)})`;
+}
+function scene3(t) {
+  // jongles (11.0 → 12.9) puis penalty (12.9 → 15.0)
+  let lights = "";
+  for (let i = 0; i < 6; i++) lights += `<div class="abs" style="left:${80 + i * 180}px;top:60px;width:60px;height:60px;border-radius:50%;background:#fff;box-shadow:0 0 ${80 + 40 * Math.sin(t * 6 + i)}px 30px rgba(255,255,220,.6)"></div>`;
+  setHTML($("s3-lights"), lights);
+  const ball = $("s3-ball"), kp = $("s3-keeper"), goal = $("s3-goal");
+  const juggling = t < 12.9;
+  goal.style.opacity = juggling ? 0.25 : 1;
+  kp.style.opacity = juggling ? 0 : 1;
+  setHTML($("s3-franck"), franckSvg(t > 13.3 ? "wow" : mouth(t), false));
+  let fx = "";
+  if (juggling) {
+    const period = 0.32, k = (t - 11) / period, ph = k % 1;
+    const n = Math.floor(k) + 1;
+    ball.style.left = 540 + Math.sin(k * 1.7) * 90 + "px";
+    ball.style.top = 1350 - Math.sin(ph * Math.PI) * 650 + "px";
+    ball.style.transform = `translate(-50%,-50%) rotate(${t * 900}deg)`;
+    setHTML($("s3-count"), "JONGLES : " + Math.min(n, 12));
+    $("s3-count").style.opacity = 1;
+    $("s3-count").style.transform = `scale(${1 + 0.12 * (1 - ph)})`;
+    $("s3-word").style.opacity = 0;
+  } else {
+    $("s3-count").style.opacity = 0;
+    const shot = eOut(seg(t, 13.0, 13.35));
+    const dive = eOut(seg(t, 13.0, 13.3));
+    kp.style.left = lerp(540, 300, dive) + "px";
+    kp.style.transform = `translate(-50%,-50%) rotate(${-40 * dive}deg)`;
+    ball.style.left = lerp(540, 820, shot) + "px";
+    ball.style.top = lerp(1500, 780, shot) + "px";
+    ball.style.transform = `translate(-50%,-50%) scale(${lerp(1, 0.6, shot)}) rotate(${t * 1200}deg)`;
+    if (t >= 13.35) slam($("s3-word"), "BUT !!!", t, 13.35); else $("s3-word").style.opacity = 0;
+    fx += burstHTML(t, 13.35, 820, 780, ["⚽", "🎉", "✨", "🏆"], 24, 600, 7, 1.3);
+    fx += rainHTML(t, 13.4, 40, 4, ["🎉", "✨", "⭐", "🎊"]);
+  }
+  setHTML($("s3-fx"), fx);
+  $("L3").style.transform = t > 13.35 && t < 13.6 ? `translate(${Math.sin(t * 100) * 14}px,0)` : "none";
+}
+const PARADE = [
+  { n: "Épaves", p: 400, s: { style: "citadine", color: "#7f8c8d", rust: true } },
+  { n: "Citadines", p: 2500, s: { style: "citadine", color: "#e67e22", wheel: 1 } },
+  { n: "Premium", p: 32000, s: { style: "berline", color: "#2c3e50", wheel: 2, tint: true } },
+  { n: "Supercars", p: 950000, s: { style: "supercar", color: "#c0392b", wheel: 4, spoiler: 2, sticker: 1 } },
+  { n: "Légendes", p: 2.2e7, s: { style: "coupe", color: "#d0d6dc", wheel: 3, neon: "#ff4fd8", shine: true } },
+  { n: "Volantes", p: 1.6e8, s: { style: "hover", color: "#16a085", neon: "#00e5ff" } },
+  { n: "Soucoupes", p: 2.2e10, s: { style: "ufo", color: "#8e44ad", neon: "#ffe14d" } },
+  { n: "Multivers", p: 3.5e14, s: { style: "ufo", color: "#f1c40f", neon: "#ff4fd8", shine: true } }
+];
+function fmtE(n) { const u = [[1e12, "billions"], [1e9, "milliards"], [1e6, "millions"], [1e3, "k"]]; for (const [v, s] of u) if (n >= v) return (n / v).toFixed(n / v < 10 ? 1 : 0).replace(".", ",") + " " + s + " €"; return Math.round(n) + " €"; }
+function scene4(t) {
+  const p = seg(t, 15.0, 20.0);
+  const idx = Math.min(PARADE.length - 1, Math.floor(p * PARADE.length));
+  // ciel : garage → nuit étoilée → espace
+  const sky = $("s4-sky");
+  const c1 = p < 0.5 ? `hsl(${lerp(225, 250, p * 2)},70%,${lerp(45, 18, p * 2)}%)` : `hsl(${lerp(250, 280, (p - 0.5) * 2)},70%,${lerp(18, 6, (p - 0.5) * 2)}%)`;
+  let stars = "";
+  if (p > 0.35) { const r = rng(99); for (let i = 0; i < 60; i++) stars += `<div class="abs" style="left:${r() * 1080}px;top:${r() * 1400}px;width:6px;height:6px;border-radius:50%;background:#fff;opacity:${(p - 0.35) * 1.6 * (0.4 + 0.6 * Math.abs(Math.sin(t * 3 + i)))}"></div>`; }
+  sky.style.background = `linear-gradient(180deg, ${c1}, #0a1250)`;
+  setHTML(sky, stars);
+  setHTML($("s4-tier"), PARADE[idx].n.toUpperCase());
+  $("s4-tier").style.transform = `scale(${1 + 0.15 * (1 - ((p * PARADE.length) % 1))})`;
+  const priceNow = PARADE[0].p * Math.pow(PARADE[PARADE.length - 1].p / PARADE[0].p, eIn(p) * 0.6 + p * 0.4);
+  setHTML($("s4-price"), fmtE(priceNow));
+  let cars = "";
+  PARADE.forEach((c, i) => {
+    const x = 540 + (i - p * (PARADE.length - 1)) * 820;
+    if (x < -600 || x > 1700) return;
+    const big = 1 - Math.min(1, Math.abs(x - 540) / 820) * 0.35;
+    const fly = c.s.style === "hover" || c.s.style === "ufo" ? Math.sin(t * 4 + i) * 30 - 60 : 0;
+    cars += `<div class="abs" style="left:${x - 400 * big}px;top:${1150 + fly}px;width:${800 * big}px">${carSvg(c.s)}</div>`;
+  });
+  setHTML($("s4-cars"), cars);
+}
+const FEATS = [
+  { w: "ENCHÈRES", a: 20.0, sub: "🔨 Éditions limitées · <b style='color:#ffe14d'>ADJUGÉ !</b>" },
+  { w: "COFFRES", a: 21.25, sub: "🧤 🧳 🏆 Accessoires rares · boosts" },
+  { w: "MUSÉE", a: 22.5, sub: "🏛️ Expose tes chefs-d'œuvre" },
+  { w: "FRANCHISES", a: 23.75, sub: "🌍 De Lyon à Andromède" }
+];
+function scene5(t) {
+  let f = FEATS[0];
+  for (const x of FEATS) if (t >= x.a) f = x;
+  slam($("s5-word"), f.w, t, f.a);
+  const lp = t - f.a;
+  let art = "", fx = "";
+  if (f.w === "ENCHÈRES") {
+    const hit = Math.max(0, Math.sin(Math.min(lp, 0.9) * Math.PI * 3.3));
+    art = `<div class="abs" style="left:140px;top:240px;width:800px">${carSvg({ style: "supercar", color: "#f1c40f", wheel: 5, rim: "#ffd700", shine: true })}</div>
+      <div class="abs" style="left:720px;top:${60 + hit * 60}px;font-size:220px;transform:rotate(${-30 + hit * 40}deg)">🔨</div>`;
+    if (lp > 0.55) art += `<div class="abs slam red" style="left:0;right:0;top:640px;font-size:150px;transform:scale(${lerp(2, 1, eBack(seg(lp, 0.55, 0.8)))}) rotate(-6deg)">ADJUGÉ !</div>`;
+    fx += burstHTML(t, f.a + 0.6, 540, 1200, ["💶", "🪙", "✨"], 16, 500, 21);
+  } else if (f.w === "COFFRES") {
+    const sh = lp < 0.55 ? Math.sin(lp * 70) * 10 : 0;
+    const pop = eBack(seg(lp, 0.55, 0.8));
+    art = `<div class="abs" style="left:0;right:0;top:${160}px;text-align:center;font-size:${lp < 0.55 ? 380 : lerp(380, 300, pop)}px;transform:rotate(${sh}deg);filter:drop-shadow(0 0 60px #f2c94c)">🏆</div>`;
+    if (lp > 0.55) art += ["⚽ Ballon d'Or", "👕 Maillot n°5", "🗿 Figurine Franck"].map((s, i) => `<div class="abs tag" style="left:540px;top:${640 + i * 100}px;transform:translate(-50%,0) scale(${eBack(seg(lp, 0.6 + i * 0.1, 0.85 + i * 0.1))})">${s}</div>`).join("");
+    fx += burstHTML(t, f.a + 0.55, 540, 900, ["⭐", "🏆", "💶", "✨"], 26, 650, 22);
+  } else if (f.w === "MUSÉE") {
+    art = `<div class="abs" style="left:290px;top:0;width:500px;height:900px;background:radial-gradient(ellipse at 50% 0%, rgba(255,250,200,.55), transparent 70%)"></div>
+      <div class="abs" style="left:190px;top:${300 - 20 * Math.sin(lp * 3)}px;width:700px">${carSvg({ style: "coupe", color: "#c0392b", wheel: 5, rim: "#ffd700", spoiler: 2, sticker: 3, shine: true })}</div>
+      <div class="abs" style="left:240px;top:620px;width:600px;height:120px;background:linear-gradient(180deg,#e9e3d3,#b9b09b);border-radius:12px"></div>`;
+  } else {
+    const pins = [["🦁", 330, 330], ["⚓", 420, 470], ["🗽", 120, 300], ["🗼", 900, 340], ["🌙", 820, 80], ["🔴", 640, 120], ["🌌", 980, 60]];
+    art = `<div class="abs" style="left:90px;top:120px;width:900px;height:560px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#4fa3ff,#13207a);box-shadow:0 0 80px rgba(80,140,255,.6)"></div>` +
+      pins.map(([ic, x, y], i) => `<div class="abs" style="left:${x}px;top:${y}px;font-size:110px;transform:translate(-50%,-50%) scale(${eBack(seg(lp, i * 0.12, i * 0.12 + 0.25))})">${ic}</div>`).join("");
+  }
+  setHTML($("s5-art"), art);
+  setHTML($("s5-sub"), `<div class="tag" style="display:inline-block;transform:translateY(${lerp(80, 0, eOut(seg(lp, 0.1, 0.4)))}px);opacity:${seg(lp, 0.1, 0.3)}">${f.sub}</div>`);
+  setHTML($("s5-fx"), fx);
+  camera("L5", t, 20, 25);
+}
+function scene6(t) {
+  const p = seg(t, 25.0, 25.5);
+  let rays = "";
+  for (let i = 0; i < 16; i++) rays += `<div class="abs" style="left:540px;top:620px;width:1600px;height:90px;transform-origin:0 50%;transform:rotate(${i * 22.5 + t * 12}deg);background:linear-gradient(90deg,rgba(255,220,80,.22),transparent)"></div>`;
+  setHTML($("s6-rays"), rays);
+  setHTML($("s6-franck"), franckSvg(t > 28.6 && t < 29.2 ? "wink" : mouth(t)));
+  $("s6-franck").style.transform = `scale(${lerp(0.4, 1, eBack(p))}) rotate(${lerp(-12, 0, eOut(p))}deg)`;
+  const lp = eBack(seg(t, 25.35, 25.75));
+  $("s6-logo").style.transform = `scale(${lerp(2.5, 1, lp)})`;
+  $("s6-logo").style.opacity = t < 25.35 ? 0 : 1;
+  const cp = eBack(seg(t, 25.8, 26.15));
+  $("s6-cta").style.transform = `scale(${lerp(0, 1, cp) * (1 + 0.04 * Math.sin(t * 8))})`;
+  $("s6-sub").style.opacity = seg(t, 26.2, 26.5);
+  $("s6-url").style.opacity = seg(t, 26.5, 26.8);
+}
+
+/* ============ MONTAGE ============ */
+const SCENES = [[0, 3.0, "L0", scene0], [3.0, 6.8, "L1", scene1], [6.8, 11.0, "L2", scene2], [11.0, 15.0, "L3", scene3], [15.0, 20.0, "L4", scene4], [20.0, 25.0, "L5", scene5], [25.0, 30.01, "L6", scene6]];
+const CUTS = [3.0, 6.8, 11.0, 15.0, 20.0, 25.0];
+function seek(t) {
+  for (const [a, b, id, fn] of SCENES) {
+    const on = t >= a && t < b;
+    show(id, on);
+    if (on) fn(t);
+  }
+  // flash blanc à chaque coupe
+  let fl = 0;
+  for (const c of CUTS) { const d = t - c; if (d >= 0 && d < 0.18) fl = Math.max(fl, 1 - d / 0.18); }
+  if (t > 9.25 && t < 9.4) fl = Math.max(fl, 0.6);
+  if (t > 13.35 && t < 13.5) fl = Math.max(fl, 0.7);
+  $("flash").style.opacity = fl * 0.85;
+  return true;
+}
+window.seek = seek;
+window.ready = document.fonts ? document.fonts.ready.then(() => true) : Promise.resolve(true);
+seek(0);
+// aperçu en direct si ouvert dans un navigateur (?play)
+if (location.search.includes("play")) { const t0 = performance.now(); (function loop() { const t = ((performance.now() - t0) / 1000) % 30; seek(t); requestAnimationFrame(loop); })(); }
+</script>
+</body>
+</html>

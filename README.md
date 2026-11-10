@@ -2,7 +2,10 @@
 
 Idle / incrémental parodique : Franck rachète toutes les voitures, les retape, les customise et les revend de plus en plus cher. Jeu de fan non officiel, marques inventées.
 
-## Lancer
+## Jouer en ligne
+https://swanca.github.io/vendez-votre-caisse/ — jouable sur mobile, plein écran, installable (Options → Installer le jeu), hors ligne après le premier chargement.
+
+## Lancer en local
 Depuis le dossier parent (`C:\Dev\Idle game`) :
 
 ```bash
@@ -10,6 +13,12 @@ node serve.js
 ```
 
 Puis ouvre http://localhost:8080/vendez-votre-caisse/
+
+## Bande-annonce (dossier `video/`)
+- `trailer.html` : les scènes animées (1080×1920), calculées image par image (`seek(t)`) ; `?play` pour l'aperçu en direct.
+- `voices.ps1` : voix off (voix Windows Hortense).
+- `audio.sh` : musique synthétisée, effets, voix et gimmicks de Franck mixés.
+- `render.js` : rendu des 900 images avec Chrome headless ; puis ffmpeg assemble `bande-annonce.mp4`.
 
 ## Boucle de jeu
 1. **Tourner une pub** (gros bouton orange) → des clients appellent pour vendre leur voiture.
